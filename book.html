@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-1">Book Appointment</h2>
+<p class="text-muted mb-4">
+    {{ professional.Name }} &mdash; {{ professional.Specialization }}
+    &nbsp;|&nbsp; Fee: ${{ professional.ServiceFee }}
+</p>
+
+{% if slots %}
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label fw-semibold">Select an Available Slot</label>
+        <select name="slot_id" class="form-select" required>
+            {% for slot in slots %}
+                <option value="{{ slot.SlotID }}">
+                    {{ slot.Date }} &nbsp; {{ slot.StartTime }} – {{ slot.EndTime }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Confirm Booking</button>
+    <a href="/" class="btn btn-outline-secondary ms-2">Cancel</a>
+</form>
+{% else %}
+    <div class="alert alert-warning">
+        No available slots for this professional right now.
+    </div>
+    <a href="/" class="btn btn-outline-primary">Go Back</a>
+{% endif %}
+{% endblock %}

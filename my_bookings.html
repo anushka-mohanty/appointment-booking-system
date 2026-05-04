@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">My Bookings</h2>
+
+{% if bookings %}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover bg-white shadow-sm">
+        <thead class="table-primary">
+            <tr>
+                <th>ID</th>
+                <th>Doctor</th>
+                <th>Specialization</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Fee</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Review</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for b in bookings %}
+            <tr>
+                <td>{{ b.BookingID }}</td>
+                <td>{{ b.DoctorName }}</td>
+                <td>{{ b.Specialization }}</td>
+                <td>{{ b.Date }}</td>
+                <td>{{ b.StartTime }} – {{ b.EndTime }}</td>
+                <td>${{ b.ServiceFee }}</td>
+                <td>
+                    {% if b.Status == 'Confirmed' %}
+                        <span class="badge bg-success">Confirmed</span>
+                    {% else %}
+                        <span class="badge bg-danger">Cancelled</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if b.PaymentStatus == 'Paid' %}
+                        <span class="badge bg-success">Paid</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if b.Rating %}
+                        ⭐ {{ b.Rating }}/5 — {{ b.Comment }}
+                    {% elif b.Status == 'Confirmed' %}
+                        <a href="/review/{{ b.BookingID }}" class="btn btn-outline-secondary btn-sm">Leave Review</a>
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+                <td>
+                    {% if b.Status == 'Confirmed' %}
+                        <a href="/cancel/{{ b.BookingID }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Cancel this booking?')">Cancel</a>
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <div class="alert alert-info">You have no bookings yet. <a href="/">Book one now</a>.</div>
+{% endif %}
+{% endblock %}

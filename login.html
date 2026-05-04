@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h4 class="card-title mb-3">Login</h4>
+                <p class="text-muted small">Enter your User ID to continue</p>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">User ID</label>
+                        <input type="number" name="user_id" class="form-control" placeholder="e.g. 1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <hr>
+                <p class="small text-muted mb-0">
+                    Sample users — Customer: ID 1 or 2 &nbsp;|&nbsp; Admin: ID 3
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
